@@ -1,16 +1,41 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import NFTImage from './NFTImage'
 import NFTAvatars from './NFTAvatars'
+import { COLORS, SIZES } from '../constants'
+import NFTTitle from './NFTTitle'
+import NFTInfo from './NFTInfo'
+import { useNavigation } from '@react-navigation/native'
 
 const NFTCard = ({NFTItem}) => {
+  const navigate = useNavigation()
+
+  const handelPress = () => {
+    navigate.navigate('NFT-details', {NFTItem})
+  }
   return (
     <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={handelPress}>
             <NFTImage image={NFTItem.image} imageStyle={styles.imageStyle} /> 
         </TouchableOpacity>
         <View style={styles.cardTop}>
           <NFTAvatars avatars={NFTItem.avatars} />
         </View>
+        <View style={styles.cardBottom}>
+          <NFTTitle
+            NFTName={NFTItem.name}
+            creator={NFTItem.creator}
+            date={NFTItem.date}
+          />
+          <View style={{ marginTop: SIZES.small + 5 }}>
+            <NFTInfo
+              comments={NFTItem.comments}
+              views={NFTItem.views}
+              price={NFTItem.price}
+              love
+            />
+          </View>
+        </View>
+
     </View>
   )
 }
@@ -32,6 +57,6 @@ const styles = StyleSheet.create({
         borderRadius: 30
     },
     cardTop: {
-
+      marginTop: -20
     }
 })

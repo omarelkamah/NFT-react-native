@@ -2,14 +2,30 @@ import { View, Text, SafeAreaView, StyleSheet, StatusBar, FlatList } from 'react
 import { COLORS, DATA, FONTS, SIZES } from '../constants';
 import { useState } from 'react';
 import NFTCard from '../components/NFTCard';
+import HeaderWithSearch from '../components/HeaderWithSearch';
+import NotFoundNFT from '../components/NotFoundNFT';
 
 const Home = () => {
   const [nftsData, setNftsData] = useState(DATA);
+
+  const searchHandler = (value) => {
+    if (value) {
+      let filterdNFTData = DATA.filter((nft) => nft.name.toLowerCase().includes(value.toLowerCase()))
+      setNftsData(filterdNFTData)
+    } else {
+      setNftsData(DATA)
+    }
+
+    console.log(nftsData)
+  }
+
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList data={nftsData} renderItem={({item}) => <NFTCard NFTItem={item} />}
+      <HeaderWithSearch searchHandler={searchHandler} />
+      {nftsData.length ? (<FlatList data={nftsData} renderItem={({item}) => <NFTCard NFTItem={item} />}
       keyExtractor={(item) => item.id}
-      />
+      />) : <NotFoundNFT /> }
+      
     </SafeAreaView>
   )
 }
@@ -21,16 +37,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: COLORS.bg,
     paddingTop: StatusBar.currentHeight + 10,
-  },
-  notFoundContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: SIZES.xLarge,
-  },
-  notFoundText: {
-    color: COLORS.white,
-    fontFamily: FONTS.bold,
-    fontSize: SIZES.xLarge,
   },
 });

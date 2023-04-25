@@ -3,7 +3,7 @@ import { View, Text, Image, StyleSheet } from 'react-native'
 const NFTImage = ({image, imageStyle}) => {
   return (
     <View style={styles.container}>
-      <Image source={image} />
+      <Image source={image} style={imageStyle}/>
     </View>
   )
 }
