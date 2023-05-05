@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         color: COLORS.white,
         fontFamily: FONTS.semiBold,
         fontSize: 20,
-        marginBottom: 10
+        marginBottom: 5
     },
     creator: {
         flexDirection: 'row',
